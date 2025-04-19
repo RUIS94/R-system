@@ -1,0 +1,9 @@
+{
+    "ConnectionString": {
+        "server": "localhost",
+        "user": "root",
+        "database": "rsysbase",
+        "port": "3306",
+        "password": "005200"
+    }
+}
