@@ -7,6 +7,7 @@ using Optional.Caching;
 using Microsoft.Extensions.DependencyInjection;
 using Business.Customers;
 using Service.Interfaces;
+using Business.Accounts;
 
 namespace API.Extensions
 {
@@ -14,22 +15,24 @@ namespace API.Extensions
     {
         public static void AddApiServices(this IServiceCollection services)
         {
-            // 添加 Redis 配置
+            // Add Redis
             services.AddScoped<RedisHelper>();
 
-            // 添加数据访问层服务
+            // Add DataAccess
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            // 添加业务规则层服务
-            services.AddScoped<ICustomerBusinessRules, CustomerBusinessRules>();
-            services.AddScoped<IUserBusinessRules, UserBusinessRules>();
+            // Add Business
+            services.AddScoped<ICustomerBusiness, CustomerBusiness>();
+            services.AddScoped<IUserBusiness, UserBusiness>();
+            services.AddScoped<IAccountBusiness, AccountBusiness>();
 
-            // 添加服务
+            // Add Service
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
         }
     }
 }

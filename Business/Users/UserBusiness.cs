@@ -1,15 +1,16 @@
 ﻿using Business.Interfaces;
+using Business.Validation;
 using DataAccess.Interfaces;
 using Model.DomainModels;
 using Model.DTO;
 
 namespace Business.Users
 {
-    public class UserBusinessRules : IUserBusinessRules
+    public class UserBusiness : IUserBusiness
     {
         private readonly IUserRepository _userRepository;
 
-        public UserBusinessRules(IUserRepository userRepository)
+        public UserBusiness(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -25,23 +26,34 @@ namespace Business.Users
             return users.FirstOrDefault();
         }
 
-        public async Task<bool> AddUserAsync(User user)
+        public async Task<bool> AddUserAsync(CreateUserDto dto)
         {
-            var existing = await _userRepository.GetUserByTermAsync(user.UserName);
-            if (existing.Any())
-                throw new InvalidOperationException("Username already exists");
-            if (string.IsNullOrEmpty(user.Email) || !user.Email.Contains("@"))
-                throw new ArgumentException("Invalid email");
-            if (user.Role == null)
-                user.Role = new Role { RoleID = 4, Name = "Sales" };
+            UserValidator.ValidateUser(dto);
+
+            var user = new User
+            {
+                UserName = dto.UserName,
+                Password = dto.Password,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                RoleID = dto.RoleID
+            };
 
             return await _userRepository.AddUserAsync(user);
         }
 
-        public async Task<bool> UpdateUserAsync(User user)
+        public async Task<bool> UpdateUserAsync(UpdateUserDto dto)
         {
-            if (string.IsNullOrEmpty(user.UserName))
-                throw new ArgumentException("Username is required");
+            UserValidator.ValidateUser(dto);
+
+            var user = new User
+            {
+                UserName = dto.UserName,
+                Password = dto.Password,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                RoleID = dto.RoleID
+            };
 
             return await _userRepository.UpdateUserAsync(user);
         }
@@ -63,8 +75,10 @@ namespace Business.Users
             {
                 return false;
             }
-            return storedPassword == inputPassword;
+
+            // In a real application, you would use a proper hashing algorithm for password verification
             // return BCrypt.Net.BCrypt.Verify(inputPassword, storedPassword);
+            return storedPassword == inputPassword;
         }
     }
 }

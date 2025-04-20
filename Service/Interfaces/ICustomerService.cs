@@ -10,6 +10,11 @@ namespace Service.Interfaces
 {
     public interface ICustomerService
     {
-        Task<bool> CreateCustomerWithAccountAsync(CreateCustomerDto customer);
+        Task<List<Customer>> GetAllCustomersAsync();
+        Task<List<Customer>> SearchCustomersAsync(string term);
+        Task<bool> UpdateCustomerAsync(Customer customer);
+        Task<bool> UpdateNotesAsync(string username, string notes);
+        Task<bool> CreateCustomerWithAccountAsync(CreateCustomerDto dto);
+        Task<bool> DeleteCustomerWithAccountAsync(string username);
     }
 }

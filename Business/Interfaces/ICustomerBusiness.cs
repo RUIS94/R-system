@@ -8,15 +8,14 @@ using Model.DTO;
 
 namespace Business.Interfaces
 {
-    public interface ICustomerBusinessRules
+    public interface ICustomerBusiness
     {
-        Task ValidateCustomerAsync(CreateCustomerDto customer);
         Task<List<Customer>> GetAllCustomersAsync();
         Task<List<Customer>> SearchCustomersAsync(string term);
         Task<bool> AddCustomerAsync(Customer customer);
         Task<bool> UpdateCustomerAsync(Customer customer);
-        Task<bool> CanDeleteCustomerAsync(string username);
-        Task<bool> DeleteCustomerAsync(string username);
         Task<bool> UpdateNotesAsync(string username, string notes);
+        Task<bool> CreateCustomerWithAccountAsync(CreateCustomerDto dto);
+        Task<bool> DeleteCustomerWithAccountAsync(string username);
     }
 }

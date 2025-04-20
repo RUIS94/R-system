@@ -2,16 +2,19 @@
 using Model.DomainModels;
 using Model.DTO;
 using Service.Interfaces;
+using Service.Shared;
 
 namespace Service.Implementations
 {
     public class UserService : IUserService
     {
-        private readonly IUserBusinessRules _userBusiness;
+        private readonly IUserBusiness _userBusiness;
+        private readonly TransactionExecutor _transactionExecutor;
 
-        public UserService(IUserBusinessRules userBusiness)
+        public UserService(IUserBusiness userBusiness, TransactionExecutor transactionExecutor)
         {
             _userBusiness = userBusiness;
+            _transactionExecutor = transactionExecutor;
         }
 
         public async Task<List<User>> GetAllUsersAsync()
@@ -26,42 +29,37 @@ namespace Service.Implementations
 
         public async Task<bool> CreateUserAsync(CreateUserDto dto)
         {
-            var user = new User
-            {
-                UserName = dto.UserName,
-                Password = dto.Password,
-                Phone = dto.Phone,
-                Email = dto.Email,
-                RoleID = dto.RoleID
-            };
-            bool success = await _userBusiness.AddUserAsync(user);
+            var user = _userBusiness.CreateUserFromDto(dto);
 
-            if (success)
+            return await _transactionExecutor.ExecuteTransactionAsync(async () =>
             {
-                // await _logger.Log("New user created");
-                // await _cacheHelper.Invalidate("AllUsers");
-            }
-
-            return success;
+                bool success = await _userBusiness.AddUserAsync(user);
+                if (success)
+                {
+                    // Add logging, cache invalidation if needed
+                }
+                return success;
+            });
         }
 
         public async Task<bool> UpdateUserAsync(UpdateUserDto dto)
         {
-            var user = new User
+            var user = _userBusiness.UpdateUserFromDto(dto);
+
+            return await _transactionExecutor.ExecuteTransactionAsync(async () =>
             {
-                UserName = dto.UserName,
-                Password = dto.Password,
-                Phone = dto.Phone,
-                Email = dto.Email,
-                RoleID = dto.RoleID
-            };
-            return await _userBusiness.UpdateUserAsync(user);
+                return await _userBusiness.UpdateUserAsync(user);
+            });
         }
 
         public async Task<bool> DeleteUserAsync(string username)
         {
-            return await _userBusiness.DeleteUserAsync(username);
+            return await _transactionExecutor.ExecuteTransactionAsync(async () =>
+            {
+                return await _userBusiness.DeleteUserAsync(username);
+            });
         }
+
 
         public async Task<bool> VerifyUserPasswordAsync(string username, string password)
         {
