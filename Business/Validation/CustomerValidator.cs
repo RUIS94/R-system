@@ -18,38 +18,38 @@ namespace Business.Validation
             CommonValidator.ValidatePassword(password);
             CommonValidator.ValidateEmail(email);
         }
-        public static async Task EnsureUsernameNotExistsAsync(ICustomerRepository repo, string username)
-        {
-            CommonValidator.ValidateUserName(username);
-            var existing = await repo.GetCustomerByTermAsync(username);
-            if (existing.Any(c => c.UserName?.ToLower() == username.ToLower()))
-                throw new InvalidOperationException("Username already exists");
-        }
-        public static async Task EnsureCustomerExistsAsync(ICustomerRepository customerRepository, string username)
-        {
-            CommonValidator.ValidateUserName(username);
-            var existing = await customerRepository.GetCustomerByTermAsync(username);
-            if (!existing.Any())
-                throw new InvalidOperationException("Customer does not exist");
-        }
+        //public static async Task EnsureUsernameNotExistsAsync(ICustomerRepository repo, string username)
+        //{
+        //    CommonValidator.ValidateUserName(username);
+        //    var existing = await repo.GetCustomerByTermAsync(username);
+        //    if (existing.Any(c => c.UserName?.ToLower() == username.ToLower()))
+        //        throw new InvalidOperationException("Username already exists");
+        //}
+        //public static async Task EnsureCustomerExistsAsync(ICustomerRepository customerRepository, string username)
+        //{
+        //    CommonValidator.ValidateUserName(username);
+        //    var existing = await customerRepository.GetCustomerByTermAsync(username);
+        //    if (!existing.Any())
+        //        throw new InvalidOperationException("Customer does not exist");
+        //}
 
-        public static async Task ValidateUpdateCustomerAsync(ICustomerRepository customerRepository, Customer customer)
-        {
-            //CommonValidator.ValidateUserName(customer.UserName);
-            await EnsureCustomerExistsAsync(customerRepository, customer.UserName);
-        }
+        //public static async Task ValidateUpdateCustomerAsync(ICustomerRepository customerRepository, Customer customer)
+        //{
+        //    //CommonValidator.ValidateUserName(customer.UserName);
+        //    await EnsureCustomerExistsAsync(customerRepository, customer.UserName);
+        //}
 
-        public static async Task EnsureCustomerCanBeDeletedAsync(
-            ICustomerRepository customerRepository,
-            IAccountRepository accountRepository,
-            string username)
-        {
-            //CommonValidator.ValidateUserName(username);
-            await EnsureCustomerExistsAsync(customerRepository, username);
+        //public static async Task EnsureCustomerCanBeDeletedAsync(
+        //    ICustomerRepository customerRepository,
+        //    IAccountRepository accountRepository,
+        //    string username)
+        //{
+        //    //CommonValidator.ValidateUserName(username);
+        //    await EnsureCustomerExistsAsync(customerRepository, username);
 
-            decimal balance = await accountRepository.GetBalanceByUsernameAsync(username);
-            if (balance != 0)
-                throw new InvalidOperationException("Cannot delete user with non-zero balance.");
-        }
+        //    decimal balance = await accountRepository.GetBalanceByUsernameAsync(username);
+        //    if (balance != 0)
+        //        throw new InvalidOperationException("Cannot delete user with non-zero balance.");
+        //}
     }
 }

@@ -12,7 +12,6 @@ namespace Business.Interfaces
     {
         Task<List<Customer>> GetAllCustomersAsync();
         Task<List<Customer>> SearchCustomersAsync(string term);
-        Task<bool> AddCustomerAsync(Customer customer);
         Task<bool> UpdateCustomerAsync(Customer customer);
         Task<bool> UpdateNotesAsync(string username, string notes);
         Task<bool> CreateCustomerWithAccountAsync(CreateCustomerDto dto);

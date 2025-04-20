@@ -24,24 +24,16 @@ namespace Business.Customers
 
         public async Task<List<Customer>> SearchCustomersAsync(string term)
         {
-            if (string.IsNullOrWhiteSpace(term))
-            {
-                return await _customerRepository.GetAllCustomersAsync();
-            }
+            //if (string.IsNullOrWhiteSpace(term))
+            //{
+            //    return await _customerRepository.GetAllCustomersAsync();
+            //}
             return await _customerRepository.GetCustomerByTermAsync(term);
-        }
-
-        public async Task<bool> AddCustomerAsync(Customer customer)
-        {
-            CustomerValidator.ValidateBasicInfo(customer.UserName, customer.Password, customer.Email);
-            await CustomerValidator.EnsureUsernameNotExistsAsync(_customerRepository, customer.UserName);
-
-            return await _customerRepository.AddCustomerAsync(customer);
         }
 
         public async Task<bool> UpdateCustomerAsync(Customer customer)
         {
-            await CustomerValidator.ValidateUpdateCustomerAsync(_customerRepository, customer);
+            await ValidateUpdateCustomerAsync(_customerRepository, customer);
             return await _customerRepository.UpdateCustomerAsync(customer);
         }
 
@@ -56,7 +48,7 @@ namespace Business.Customers
         public async Task<bool> CreateCustomerWithAccountAsync(CreateCustomerDto dto)
         {
             CustomerValidator.ValidateBasicInfo(dto.UserName, dto.Password, dto.Email);
-            await CustomerValidator.EnsureUsernameNotExistsAsync(_customerRepository, dto.UserName);
+            await EnsureUsernameNotExistsAsync(_customerRepository, dto.UserName);
 
             var customer = new Customer
             {
@@ -86,7 +78,7 @@ namespace Business.Customers
 
         public async Task<bool> DeleteCustomerWithAccountAsync(string username)
         {
-            await CustomerValidator.EnsureCustomerCanBeDeletedAsync(_customerRepository, _accountRepository, username);
+            await EnsureCustomerCanBeDeletedAsync(_customerRepository, _accountRepository, username);
 
             int customerId = await _customerRepository.GetIDBynameAsync(username);
             bool accountDeleted = await _accountRepository.DeleteAccountAsync(customerId);
@@ -98,6 +90,41 @@ namespace Business.Customers
                 throw new InvalidOperationException("Customer deletion failed.");
 
             return true;
+        }
+
+
+        private async Task EnsureUsernameNotExistsAsync(ICustomerRepository repo, string username)
+        {
+            CommonValidator.ValidateUserName(username);
+            var existing = await repo.GetCustomerByTermAsync(username);
+            if (existing.Any(c => c.UserName?.ToLower() == username.ToLower()))
+                throw new InvalidOperationException("Username already exists");
+        }
+        private async Task EnsureCustomerExistsAsync(ICustomerRepository customerRepository, string username)
+        {
+            CommonValidator.ValidateUserName(username);
+            var existing = await customerRepository.GetCustomerByTermAsync(username);
+            if (!existing.Any())
+                throw new InvalidOperationException("Customer does not exist");
+        }
+
+        private async Task ValidateUpdateCustomerAsync(ICustomerRepository customerRepository, Customer customer)
+        {
+            //CommonValidator.ValidateUserName(customer.UserName);
+            await EnsureCustomerExistsAsync(customerRepository, customer.UserName);
+        }
+
+        private async Task EnsureCustomerCanBeDeletedAsync(
+            ICustomerRepository customerRepository,
+            IAccountRepository accountRepository,
+            string username)
+        {
+            //CommonValidator.ValidateUserName(username);
+            await EnsureCustomerExistsAsync(customerRepository, username);
+
+            decimal balance = await accountRepository.GetBalanceByUsernameAsync(username);
+            if (balance != 0)
+                throw new InvalidOperationException("Cannot delete user with non-zero balance.");
         }
     }
 }

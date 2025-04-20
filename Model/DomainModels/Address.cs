@@ -15,7 +15,7 @@ namespace Model.DomainModels
         public int CustomerID { get; set; }
 
         [Column("address_type")]
-        public AddressType AddressType { get; set; }
+        public string? AddressType { get; set; }
 
         [Column("street_address")]
         public string? StreetAddress { get; set; }

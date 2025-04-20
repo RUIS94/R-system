@@ -29,11 +29,9 @@ namespace Service.Implementations
 
         public async Task<bool> CreateUserAsync(CreateUserDto dto)
         {
-            var user = _userBusiness.CreateUserFromDto(dto);
-
-            return await _transactionExecutor.ExecuteTransactionAsync(async () =>
+            return await _transactionExecutor.ExecuteAsync(async () =>
             {
-                bool success = await _userBusiness.AddUserAsync(user);
+                bool success = await _userBusiness.AddUserAsync(dto);
                 if (success)
                 {
                     // Add logging, cache invalidation if needed
@@ -44,17 +42,15 @@ namespace Service.Implementations
 
         public async Task<bool> UpdateUserAsync(UpdateUserDto dto)
         {
-            var user = _userBusiness.UpdateUserFromDto(dto);
-
-            return await _transactionExecutor.ExecuteTransactionAsync(async () =>
+            return await _transactionExecutor.ExecuteAsync(async () =>
             {
-                return await _userBusiness.UpdateUserAsync(user);
+                return await _userBusiness.UpdateUserAsync(dto);
             });
         }
 
         public async Task<bool> DeleteUserAsync(string username)
         {
-            return await _transactionExecutor.ExecuteTransactionAsync(async () =>
+            return await _transactionExecutor.ExecuteAsync(async () =>
             {
                 return await _userBusiness.DeleteUserAsync(username);
             });
