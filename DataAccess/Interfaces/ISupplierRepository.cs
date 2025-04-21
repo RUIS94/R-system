@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Repositories;
 using Model.DomainModels;
-using Optional.Caching;
 
 namespace DataAccess.Interfaces
 {

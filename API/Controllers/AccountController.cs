@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Model.DomainModels;
-using Service.Implementations;
 using Service.Interfaces;
 
 namespace API.Controllers
@@ -37,11 +35,12 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAccountAsync([FromBody] Account account)
         {
-            var success = await _accountService.AddAccountAsync(account);
-            if (!success)
-                return BadRequest("Failed to add account");
+            return Forbid("This functionality is currently disabled."); // if need this functionality, remove this line and uncomment the code below
+            //var success = await _accountService.AddAccountAsync(account);
+            //if (!success)
+            //    return BadRequest("Failed to add account");
 
-            return Ok("Account added successfully");
+            //return Ok("Account added successfully");
         }
 
         [HttpPut]

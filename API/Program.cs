@@ -1,3 +1,4 @@
+using API;
 using API.Extensions;
 using DataAccess;
 using DataAccess.EF;
@@ -18,6 +19,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+//Using api key
+//app.UseMiddleware<ApiKey>();//Delete it when debug
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,0 +1,85 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">InternalUI</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'controlsSubmenu')">
+                <span class="bi bi-tools" aria-hidden="true"></span> Controls
+            </a>
+            <div class="nav-item-submenu" id="controlsSubmenu" style="display: none;">
+                <NavLink class="nav-link" href="/customers">Customer Control</NavLink>
+                <NavLink class="nav-link" href="/products">Product Control</NavLink>
+                <NavLink class="nav-link" href="/suppliers">Supplier Control</NavLink>
+            </div>
+        </div>
+
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'ordersSubmenu')">
+                <span class="bi bi-file-earmark-text" aria-hidden="true"></span> Orders
+            </a>
+            <div class="nav-item-submenu" id="ordersSubmenu" style="display: none;">
+                <NavLink class="nav-link" href="/customer-orders">Customer Orders</NavLink>
+                <NavLink class="nav-link" href="/supplier-orders">Supplier Orders</NavLink>
+                <NavLink class="nav-link" href="/inventory">Inventory</NavLink>
+            </div>
+        </div>
+
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'utilitiesSubmenu')">
+                <span class="bi bi-tools" aria-hidden="true"></span> Utilities
+            </a>
+            <div class="nav-item-submenu" id="utilitiesSubmenu" style="display: none;">
+                <NavLink class="nav-link" href="/calendar">Calendar</NavLink>
+                <NavLink class="nav-link" href="/calculator">Calculator</NavLink>
+                <NavLink class="nav-link" href="/tasks">Tasks</NavLink>
+                <NavLink class="nav-link" href="/exchange-rate">Exchange Rate Converter</NavLink>
+            </div>
+        </div>
+
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'adminSubmenu')">
+                <span class="bi bi-lock" aria-hidden="true"></span> Admin
+            </a>
+            <div class="nav-item-submenu" id="adminSubmenu" style="display: none;">
+                <NavLink class="nav-link" href="/tasks">Task Menu</NavLink>
+                <NavLink class="nav-link" href="/users">User Control</NavLink>
+                <NavLink class="nav-link" href="/wallpapers">Wallpapers</NavLink>
+            </div>
+        </div>
+
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'helpSubmenu')">
+                <span class="bi bi-question-circle" aria-hidden="true"></span> Help
+            </a>
+            <div class="nav-item-submenu" id="helpSubmenu" style="display: none;">
+                <NavLink class="nav-link" href="/support-docs">Document Support</NavLink>
+                <NavLink class="nav-link" href="mailto:support@example.com">Email Support</NavLink>
+                <NavLink class="nav-link" href="/contact-us">Contact Us</NavLink>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<script>
+    function toggleSubmenu(event, submenuId) {
+        event.preventDefault(); // Prevent the link from navigating
+        const submenu = document.getElementById(submenuId);
+
+        // Toggle the clicked submenu only
+        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+
