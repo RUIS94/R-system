@@ -1,0 +1,32 @@
+@* AccountInfoForm.razor *@
+
+@using System.ComponentModel.DataAnnotations
+
+<div class="account-info-form">
+    <div class="form-group">
+        <label for="balance">Balance</label>
+        <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" class="form-control" id="balance" 
+                   placeholder="Enter balance" 
+                   step="0.01" 
+                   min="0" 
+                   @bind="Balance" 
+                   readonly />
+        </div>
+    </div>
+    <div class="button-group">
+        <button class="btn btn-primary" @onclick="HandleRecharge">Recharge</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public decimal Balance { get; set; } = 0;
+
+    private void HandleRecharge()
+    {
+        // TODO: Implement recharge functionality
+        Console.WriteLine("Recharge button clicked");
+    }
+} 

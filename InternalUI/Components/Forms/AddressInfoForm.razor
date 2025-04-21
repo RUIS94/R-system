@@ -1,0 +1,85 @@
+@* AddressInfoForm.razor *@
+
+<div class="address-info-form">
+    <div class="form-group">
+        <label for="street">Street Address</label>
+        <input type="text" 
+               id="street" 
+               class="form-control" 
+               placeholder="Enter street address"
+               @bind="Street" />
+    </div>
+
+    <div class="form-group">
+        <label for="suburb">Suburb</label>
+        <input type="text" 
+               id="suburb" 
+               class="form-control" 
+               placeholder="Enter suburb"
+               @bind="Suburb" />
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="state">State</label>
+            <input type="text" 
+                   id="state" 
+                   class="form-control" 
+                   placeholder="Enter state"
+                   @bind="State" />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="postCode">Post Code</label>
+            <input type="text" 
+                   id="postCode" 
+                   class="form-control" 
+                   placeholder="Enter post code"
+                   @bind="PostCode" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="country">Country</label>
+        <select id="country" 
+                class="form-control" 
+                @bind="Country">
+            <option value="">Select a country</option>
+            @foreach (var country in AllCountries)
+            {
+                <option value="@country">@country</option>
+            }
+        </select>
+    </div>
+</div>
+
+@code {
+    private string Street { get; set; } = string.Empty;
+    private string Suburb { get; set; } = string.Empty;
+    private string State { get; set; } = string.Empty;
+    private string PostCode { get; set; } = string.Empty;
+    private string Country { get; set; } = string.Empty;
+
+    private List<string> AllCountries = new List<string>
+    {
+        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+        "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+        "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
+        "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
+        "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
+        "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
+        "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+        "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
+        "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kosovo",
+        "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
+        "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius",
+        "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia",
+        "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman",
+        "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
+        "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
+        "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
+        "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
+        "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
+        "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela",
+        "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+    };
+} 

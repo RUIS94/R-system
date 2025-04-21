@@ -1,46 +1,47 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">InternalUI</a>
+        <a class="navbar-brand" href="/">
+            <img src="favicon.png" alt="Logo" class="logo" />
+            <span class="brand-text">InternalUI</span>
+        </a>
     </div>
+    <button class="navbar-toggler" onclick="toggleNav()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+<div class="nav-scrollable">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'controlsSubmenu')">
-                <span class="bi bi-tools" aria-hidden="true"></span> Controls
-            </a>
-            <div class="nav-item-submenu" id="controlsSubmenu" style="display: none;">
-                <NavLink class="nav-link" href="/customers">Customer Control</NavLink>
-                <NavLink class="nav-link" href="/products">Product Control</NavLink>
-                <NavLink class="nav-link" href="/suppliers">Supplier Control</NavLink>
+        <div class="nav-item">
+            <div class="nav-link" onclick="toggleSubmenu('controlsSubmenu')" onmouseover="showSubmenuIfCollapsed('controlsSubmenu')" onmouseout="hideSubmenuIfCollapsed('controlsSubmenu')">
+                <span class="bi bi-tools" aria-hidden="true"></span>
+                <span class="nav-text">Controls</span>
+            </div>
+            <div class="nav-item-submenu" id="controlsSubmenu">
+                <NavLink class="nav-link" href="/customer-control">Customer Control</NavLink>
+                <NavLink class="nav-link" href="/products-control">Product Control</NavLink>
+                <NavLink class="nav-link" href="/suppliers-control">Supplier Control</NavLink>
             </div>
         </div>
 
-        <div class="nav-item px-3">
-            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'ordersSubmenu')">
-                <span class="bi bi-file-earmark-text" aria-hidden="true"></span> Orders
-            </a>
-            <div class="nav-item-submenu" id="ordersSubmenu" style="display: none;">
+        <div class="nav-item">
+            <div class="nav-link" onclick="toggleSubmenu('ordersSubmenu')" onmouseover="showSubmenuIfCollapsed('ordersSubmenu')" onmouseout="hideSubmenuIfCollapsed('ordersSubmenu')">
+                <span class="bi bi-file-earmark-text" aria-hidden="true"></span>
+                <span class="nav-text">Orders</span>
+            </div>
+            <div class="nav-item-submenu" id="ordersSubmenu">
                 <NavLink class="nav-link" href="/customer-orders">Customer Orders</NavLink>
                 <NavLink class="nav-link" href="/supplier-orders">Supplier Orders</NavLink>
                 <NavLink class="nav-link" href="/inventory">Inventory</NavLink>
             </div>
         </div>
 
-        <div class="nav-item px-3">
-            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'utilitiesSubmenu')">
-                <span class="bi bi-tools" aria-hidden="true"></span> Utilities
-            </a>
-            <div class="nav-item-submenu" id="utilitiesSubmenu" style="display: none;">
+        <div class="nav-item">
+            <div class="nav-link" onclick="toggleSubmenu('utilitiesSubmenu')" onmouseover="showSubmenuIfCollapsed('utilitiesSubmenu')" onmouseout="hideSubmenuIfCollapsed('utilitiesSubmenu')">
+                <span class="bi bi-tools" aria-hidden="true"></span>
+                <span class="nav-text">Utilities</span>
+            </div>
+            <div class="nav-item-submenu" id="utilitiesSubmenu">
                 <NavLink class="nav-link" href="/calendar">Calendar</NavLink>
                 <NavLink class="nav-link" href="/calculator">Calculator</NavLink>
                 <NavLink class="nav-link" href="/tasks">Tasks</NavLink>
@@ -48,22 +49,24 @@
             </div>
         </div>
 
-        <div class="nav-item px-3">
-            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'adminSubmenu')">
-                <span class="bi bi-lock" aria-hidden="true"></span> Admin
-            </a>
-            <div class="nav-item-submenu" id="adminSubmenu" style="display: none;">
+        <div class="nav-item">
+            <div class="nav-link" onclick="toggleSubmenu('adminSubmenu')" onmouseover="showSubmenuIfCollapsed('adminSubmenu')" onmouseout="hideSubmenuIfCollapsed('adminSubmenu')">
+                <span class="bi bi-lock" aria-hidden="true"></span>
+                <span class="nav-text">Admin</span>
+            </div>
+            <div class="nav-item-submenu" id="adminSubmenu">
                 <NavLink class="nav-link" href="/tasks">Task Menu</NavLink>
                 <NavLink class="nav-link" href="/users">User Control</NavLink>
                 <NavLink class="nav-link" href="/wallpapers">Wallpapers</NavLink>
             </div>
         </div>
 
-        <div class="nav-item px-3">
-            <a href="#" class="nav-link" onclick="toggleSubmenu(event, 'helpSubmenu')">
-                <span class="bi bi-question-circle" aria-hidden="true"></span> Help
-            </a>
-            <div class="nav-item-submenu" id="helpSubmenu" style="display: none;">
+        <div class="nav-item">
+            <div class="nav-link" onclick="toggleSubmenu('helpSubmenu')" onmouseover="showSubmenuIfCollapsed('helpSubmenu')" onmouseout="hideSubmenuIfCollapsed('helpSubmenu')">
+                <span class="bi bi-question-circle" aria-hidden="true"></span>
+                <span class="nav-text">Help</span>
+            </div>
+            <div class="nav-item-submenu" id="helpSubmenu">
                 <NavLink class="nav-link" href="/support-docs">Document Support</NavLink>
                 <NavLink class="nav-link" href="mailto:support@example.com">Email Support</NavLink>
                 <NavLink class="nav-link" href="/contact-us">Contact Us</NavLink>
@@ -72,14 +75,94 @@
     </nav>
 </div>
 
-
 <script>
-    function toggleSubmenu(event, submenuId) {
-        event.preventDefault(); // Prevent the link from navigating
-        const submenu = document.getElementById(submenuId);
-
-        // Toggle the clicked submenu only
-        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+    function toggleNav() {
+        const sidebar = document.querySelector('.sidebar');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        
+        if (isCollapsed) {
+            sidebar.classList.remove('collapsed');
+            // 重置所有子菜单的样式
+            document.querySelectorAll('.nav-item-submenu').forEach(menu => {
+                menu.style.display = 'none';
+                menu.style.position = '';
+                menu.style.left = '';
+                menu.style.top = '';
+            });
+        } else {
+            sidebar.classList.add('collapsed');
+            // 隐藏所有子菜单
+            document.querySelectorAll('.nav-item-submenu').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        }
     }
+
+    function toggleSubmenu(submenuId) {
+        const sidebar = document.querySelector('.sidebar');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        
+        if (isCollapsed) {
+            return; // 在缩小状态下，使用鼠标悬停显示子菜单
+        }
+        
+        const submenu = document.getElementById(submenuId);
+        const isVisible = submenu.style.display === 'block';
+        
+        // 重置子菜单的样式
+        submenu.style.position = '';
+        submenu.style.left = '';
+        submenu.style.top = '';
+        
+        // 只切换当前子菜单的显示状态
+        submenu.style.display = isVisible ? 'none' : 'block';
+    }
+
+    function showSubmenuIfCollapsed(submenuId) {
+        const sidebar = document.querySelector('.sidebar');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        
+        if (!isCollapsed) {
+            return; // 在展开状态下，使用点击显示子菜单
+        }
+        
+        const submenu = document.getElementById(submenuId);
+        const navItem = submenu.closest('.nav-item');
+        const rect = navItem.getBoundingClientRect();
+        
+        submenu.style.display = 'block';
+        submenu.style.position = 'fixed';
+        submenu.style.left = rect.right + 'px';
+        submenu.style.top = rect.top + 'px';
+    }
+
+    function hideSubmenuIfCollapsed(submenuId) {
+        const sidebar = document.querySelector('.sidebar');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        
+        if (!isCollapsed) {
+            return; // 在展开状态下，使用点击显示子菜单
+        }
+        
+        const submenu = document.getElementById(submenuId);
+        submenu.style.display = 'none';
+    }
+
+    // 点击页面其他地方时隐藏所有子菜单（仅在展开状态下）
+    document.addEventListener('click', function(event) {
+        const sidebar = document.querySelector('.sidebar');
+        const isCollapsed = sidebar.classList.contains('collapsed');
+        
+        if (isCollapsed) {
+            return; // 在缩小状态下，使用鼠标悬停显示子菜单
+        }
+        
+        if (!event.target.closest('.nav-item')) {
+            document.querySelectorAll('.nav-item-submenu').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        }
+    });
 </script>
+
 

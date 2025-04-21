@@ -1,0 +1,130 @@
+@* SearchModal.razor *@
+
+<div class="modal-overlay" @onclick="CloseModal">
+    <div class="modal-content" @onclick:stopPropagation>
+        <div class="modal-header">
+            <h3>Search</h3>
+            <button class="close-button" @onclick="CloseModal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="search-form">
+                <div class="form-group">
+                    <input type="text" class="form-control" 
+                           placeholder="Enter search term..." 
+                           @bind="SearchTerm" 
+                           @bind:event="oninput" />
+                </div>
+            </div>
+            
+            <div class="search-results">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in SearchResults)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@item.Details</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                
+                <div class="pagination">
+                    <button class="btn" @onclick="PreviousPage" disabled="@(CurrentPage <= 1)">Previous</button>
+                    <span>Page @CurrentPage of @TotalPages</span>
+                    <button class="btn" @onclick="NextPage" disabled="@(CurrentPage >= TotalPages)">Next</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-primary" @onclick="CreateNew">Create New</button>
+            <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+            <button class="btn btn-primary" @onclick="Confirm">Confirm</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
+
+    [Parameter]
+    public string InitialSearchTerm { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private string SearchTerm { get; set; } = string.Empty;
+    private int CurrentPage { get; set; } = 1;
+    private int TotalPages { get; set; } = 1;
+    private List<SearchResultItem> SearchResults { get; set; } = new();
+
+    protected override void OnParametersSet()
+    {
+        if (IsVisible)
+        {
+            SearchTerm = InitialSearchTerm;
+            // TODO: Trigger search with initial term
+        }
+    }
+
+    private class SearchResultItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Details { get; set; } = string.Empty;
+    }
+
+    private async Task CloseModal()
+    {
+        IsVisible = false;
+        await IsVisibleChanged.InvokeAsync(false);
+        await OnClose.InvokeAsync();
+    }
+
+    private void PreviousPage()
+    {
+        if (CurrentPage > 1)
+        {
+            CurrentPage--;
+            // TODO: Load previous page data
+        }
+    }
+
+    private void NextPage()
+    {
+        if (CurrentPage < TotalPages)
+        {
+            CurrentPage++;
+            // TODO: Load next page data
+        }
+    }
+
+    private void CreateNew()
+    {
+        // TODO: Implement create new functionality
+    }
+
+    private async Task Cancel()
+    {
+        await CloseModal();
+    }
+
+    private void Confirm()
+    {
+        // TODO: Implement confirm functionality
+    }
+} 

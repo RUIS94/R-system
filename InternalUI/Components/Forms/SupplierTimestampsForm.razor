@@ -1,0 +1,56 @@
+@using InternalUI.Models
+
+<div class="supplier-timestamps-form">
+    <div class="date-row">
+        <div class="date-field">
+            <label>Created At</label>
+            <input type="text" class="form-control" value="@(CreatedAt.HasValue ? CreatedAt.Value.ToString("yyyy-MM-dd") : "")" readonly />
+        </div>
+        <div class="date-field">
+            <label>Updated At</label>
+            <input type="text" class="form-control" value="@(UpdatedAt.HasValue ? UpdatedAt.Value.ToString("yyyy-MM-dd") : "")" readonly />
+        </div>
+    </div>
+</div>
+
+<style>
+    .supplier-timestamps-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .date-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .date-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .date-field label {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .form-control {
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+    }
+
+    .form-control[readonly] {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+    }
+</style>
+
+@code {
+    private DateTime? CreatedAt { get; set; }
+    private DateTime? UpdatedAt { get; set; }
+} 

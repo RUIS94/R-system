@@ -1,0 +1,42 @@
+@* CustomerAdditionalInfoForm.razor *@
+
+<div class="additional-info-form">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="vipLevel">VIP Level</label>
+            <select id="vipLevel" 
+                    class="form-control" 
+                    @bind="VipLevel">
+                <option value="">Select VIP level</option>
+                <option value="0">Regular</option>
+                <option value="1">Silver</option>
+                <option value="2">Gold</option>
+                <option value="3">Platinum</option>
+                <option value="4">Diamond</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="creationDate">Creation Date</label>
+            <input type="text" 
+                   id="creationDate" 
+                   class="form-control" 
+                   value="@(CreationDate?.ToString("yyyy-MM-dd HH:mm") ?? string.Empty)"
+                   readonly />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea id="notes" 
+                  class="form-control notes-textarea" 
+                  placeholder="Enter additional notes..."
+                  @bind="Notes"
+                  rows="5"></textarea>
+    </div>
+</div>
+
+@code {
+    private string VipLevel { get; set; } = string.Empty;
+    private DateTime? CreationDate { get; set; } = null;
+    private string Notes { get; set; } = string.Empty;
+} 
