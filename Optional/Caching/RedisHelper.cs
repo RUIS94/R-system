@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace Optional.Caching
+namespace Infrastructure.Caching
 {
     public class RedisHelper : IRedisHelper
     {

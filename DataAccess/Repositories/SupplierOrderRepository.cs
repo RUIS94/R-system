@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Interfaces;
 using Model.DomainModels;
-using Optional.Caching;
+using Infrastructure.Caching;
 
 namespace DataAccess.Repositories
 {

@@ -2,8 +2,8 @@
 using System.Security.Principal;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
+using Infrastructure.Caching;
 using Model.DomainModels;
-using Optional.Caching;
 using StackExchange.Redis;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 

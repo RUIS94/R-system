@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{C016DF00-E8E1-48CE-817A-B1D15F580A3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Optional", "Optional\Optional.csproj", "{7AC86AD8-F40B-48B1-AE9F-E61EB08C7217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Optional\Infrastructure.csproj", "{7AC86AD8-F40B-48B1-AE9F-E61EB08C7217}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{3187CEDF-D027-4824-A8BA-9D93DC85D4DE}"
 EndProject

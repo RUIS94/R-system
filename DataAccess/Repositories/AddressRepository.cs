@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Interfaces;
+using Infrastructure.Caching;
 using Model.DomainModels;
-using Optional.Caching;
 
 namespace DataAccess.Repositories
 {

@@ -3,7 +3,6 @@ using Business.Users;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
 using Service.Implementations;
-using Optional.Caching;
 using Business.Customers;
 using Service.Interfaces;
 using Business.Accounts;
@@ -24,6 +23,7 @@ using Business.CustomerOrderDetails;
 using Business.SupplierOrders;
 using Business.SupplierOrderDetails;
 using Business.StockEntries;
+using Infrastructure.Caching;
 
 namespace API.Extensions
 {

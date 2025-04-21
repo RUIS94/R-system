@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using DataAccess.Interfaces;
+using Infrastructure.Caching;
 using Model.DomainModels;
-using Optional.Caching;
 namespace DataAccess.Repositories
 {
     public class CustomerRepository : BaseRepository, ICustomerRepository
