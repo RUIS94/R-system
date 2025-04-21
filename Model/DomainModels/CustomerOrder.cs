@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Model.DomainModels
 {
@@ -27,7 +28,7 @@ namespace Model.DomainModels
         public decimal TotalAmount { get; set; }
 
         [Column("status")]
-        public OrderStatus Status { get; set; }
+        public string? Status { get; set; }
 
         [ForeignKey("User")]
         [Column("operator_id")]
@@ -39,17 +40,18 @@ namespace Model.DomainModels
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; }
 
+        [JsonIgnore]
         public virtual Customer? Customer { get; set; }
-
+        [JsonIgnore]
         public virtual User? User { get; set; } 
     }
 
-    public enum OrderStatus
-    {
-        Pending,       
-        Processing,   
-        Completed,     
-        Cancelled      
-    }
+    //public enum OrderStatus
+    //{
+    //    Pending,       
+    //    Processing,   
+    //    Completed,     
+    //    Cancelled      
+    //}
 }
 

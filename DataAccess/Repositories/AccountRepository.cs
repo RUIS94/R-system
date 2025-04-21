@@ -24,7 +24,10 @@ namespace DataAccess.Repositories
                 return allAccounts;
             }
 
-            string query = "SELECT * FROM accounts";
+            string query = @"
+                SELECT a.id, a.customer_id, a.balance, a.created_at, c.username 
+                FROM customers c
+                JOIN accounts a ON c.id = a.customer_id";
             DataTable table = await ExecuteQueryAsync(query);
             List<Account> accounts = new List<Account>();
             foreach (DataRow row in table.Rows)
@@ -46,8 +49,11 @@ namespace DataAccess.Repositories
             {
                 return userAccount;
             }
-
-            string query = "SELECT * FROM accounts WHERE username = @username";
+            string query = @"
+                SELECT a.id, a.balance, a.created_at, c.username 
+                FROM customers c
+                JOIN accounts a ON c.id = a.customer_id
+                WHERE c.username = @username";
             var parameters = new Dictionary<string, object?>
             {
                 { "username", username }

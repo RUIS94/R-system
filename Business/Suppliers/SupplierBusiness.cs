@@ -39,7 +39,7 @@ namespace Business.Suppliers
         {
             if (!await _supplierRepository.SupplierExistsAsync(supplier.ID))
                 throw new KeyNotFoundException($"Supplier with ID {supplier.ID} does not exist");
-            return await _supplierRepository.UpdateCustomerAsync(supplier);
+            return await _supplierRepository.UpdateSupplierAsync(supplier);
         }
 
         public async Task<bool> DeleteSupplierAsync(int id)

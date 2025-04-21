@@ -81,7 +81,7 @@ namespace DataAccess.Repositories
             return true;
         }
 
-        public async Task<bool> UpdateCustomerAsync(Supplier supplier)
+        public async Task<bool> UpdateSupplierAsync(Supplier supplier)
         {
             var parameters = new Dictionary<string, object?>
             {

@@ -7,18 +7,18 @@ namespace DataAccess.EF
     {
         private readonly string _connectionString;
 
-        public ApplicationDbContext()
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+       : base(options)
         {
-            _connectionString = new DbConnection().ConnectionString;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql(
-                _connectionString,
-                ServerVersion.AutoDetect(_connectionString)
-            );
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseMySql(
+        //        _connectionString,
+        //        ServerVersion.AutoDetect(_connectionString)
+        //    );
+        //}
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerOrder> CustomerOrders { get; set; }

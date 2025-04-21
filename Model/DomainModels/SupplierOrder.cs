@@ -24,7 +24,7 @@ namespace Model.DomainModels
         public decimal TotalAmount { get; set; }
 
         [Column("status")]
-        public SupplierOrderStatus Status { get; set; }
+        public string? Status { get; set; }
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
@@ -35,11 +35,11 @@ namespace Model.DomainModels
         public virtual Supplier? Supplier { get; set; }
     }
 
-    public enum SupplierOrderStatus
-    {
-        Pending,
-        Submitted,
-        Cancelled,
-        Completed
-    }
+    //public enum SupplierOrderStatus
+    //{
+    //    Pending,
+    //    Submitted,
+    //    Cancelled,
+    //    Completed
+    //}
 }

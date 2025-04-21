@@ -1,0 +1,21 @@
+product_suppliers
+	
+		"Check the current supplier_id when goods are received; if it is empty, create a new one, and if it is inconsistent, create a new one."
+
+
+customer_order
+		Check the customer account balance, deduct the account balance, write the details to customer_order_details, and create a 		transaction to update customer_order_details and the account balance.
+
+customer_order_details
+		Create a transaction when creating customer_order to check inventory, deduct stock, and update inventory.
+
+
+
+
+supplier_orders
+
+supplier_orders_details
+
+stock_entries
+		Obtain the receipt directly from supplier_orders, and after user confirmation, submit it. Create a transaction to update 		product inventory and a transaction to update the status of supplier_orders.
+

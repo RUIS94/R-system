@@ -15,7 +15,7 @@ namespace DataAccess.Interfaces
         Task<List<Supplier>> GetAllSuppliersAsync();
         Task<List<Supplier>> GetSupplierByTermAsync(string searchTerm);
         Task<bool> AddSupplierAsync(Supplier supplier);
-        Task<bool> UpdateCustomerAsync(Supplier supplier);    
+        Task<bool> UpdateSupplierAsync(Supplier supplier);    
         Task<bool> DeleteSupplierAsync(int id);
         Task<bool> SupplierExistsAsync(int id);
     }

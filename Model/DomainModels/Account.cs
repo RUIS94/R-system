@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Model.DomainModels
 {
@@ -20,6 +21,7 @@ namespace Model.DomainModels
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
 
+        [JsonIgnore]
         public virtual Customer? Customer { get; set; }
 
         [NotMapped]
