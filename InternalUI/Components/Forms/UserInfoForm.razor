@@ -1,0 +1,77 @@
+﻿@* CustomerBasicInfoForm.razor *@
+
+<div class="basic-info-form">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text"
+               id="username"
+               class="form-control"
+               placeholder="Enter username"
+               @bind="Username" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-input-group">
+            <input type="@(ShowPassword ? "text" : "password")"
+                   id="password"
+                   class="form-control"
+                   placeholder="Enter password"
+                   @bind="Password" />
+            <button type="button"
+                    class="password-toggle"
+                    @onclick="TogglePasswordVisibility">
+                <i class="@(ShowPassword ? "bi bi-eye-slash" : "bi bi-eye")"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email"
+               id="email"
+               class="form-control"
+               placeholder="Enter email"
+               @bind="Email" />
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel"
+               id="phone"
+               class="form-control"
+               placeholder="Enter phone number"
+               @bind="Phone" />
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="vipLevel">Role</label>
+        <select id="vipLevel"
+                class="form-control"
+                @bind="Role">
+            <option value="">Select Role</option>
+            <option value="1">Admin</option>
+            <option value="2">Manager</option>
+            <option value="3">Finance</option>
+            <option value="4">Sales</option>
+            <option value="5">Technician</option>
+            <option value="6">Customer Service</option>
+            <option value="7">Purchaser</option>
+            <option value="8">Warehouse Manager</option>
+        </select>
+    </div>
+</div>
+
+@code {
+    private string Username { get; set; } = string.Empty;
+    private string Password { get; set; } = string.Empty;
+    private string Email { get; set; } = string.Empty;
+    private string Phone { get; set; } = string.Empty;
+    private bool ShowPassword { get; set; } = false;
+	private string Role { get; set; } = string.Empty;
+
+    private void TogglePasswordVisibility()
+    {
+        ShowPassword = !ShowPassword;
+    }
+} 

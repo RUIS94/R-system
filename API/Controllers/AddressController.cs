@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.DomainModels;
+using Model.DTO;
 using Service.Interfaces;
 
 namespace API.Controllers
@@ -16,7 +17,6 @@ namespace API.Controllers
             _addressService = addressService;
         }
 
-        // GET: api/address
         [HttpGet]
         public async Task<ActionResult<List<Address>>> GetAllAddresses()
         {
@@ -24,45 +24,41 @@ namespace API.Controllers
             return Ok(addresses);
         }
 
-        // GET: api/address/customer/5
-        [HttpGet("customer/{customerId}")]
-        public async Task<ActionResult<List<Address>>> GetAddressesByCustomerId(int customerId)
+        [HttpGet("customer/{username}")]
+        public async Task<ActionResult<List<Address>>> GetAddressesByCustomer(string username)
         {
-            var addresses = await _addressService.GetAddressesByCustomerIdAsync(customerId);
+            var addresses = await _addressService.GetAddressesByCustomerAsync(username);
             return Ok(addresses);
         }
 
-        // POST: api/address
-        [HttpPost]
-        public async Task<ActionResult> AddAddress([FromBody] Address address)
+        [HttpPost("{username}")]
+        public async Task<ActionResult> AddAddress(string username, [FromBody] CreateAddressDto dto)
         {
-            var success = await _addressService.AddAddressAsync(address);
+            var success = await _addressService.AddAddressAsync(username, dto);
             if (success)
                 return Ok(new { message = "Address added successfully" });
 
             return BadRequest(new { message = "Failed to add address" });
         }
 
-        // PUT: api/address/customer/5
-        [HttpPut("customer/{customerId}")]
-        public async Task<ActionResult> UpdateAddressesByCustomerId(int customerId, [FromBody] List<Address> addresses)
+        [HttpPut("customer/{username}")]
+        public async Task<ActionResult> UpdateAddressesByCustomerId(string username, [FromBody] UpdateAddressDto dto)
         {
-            var success = await _addressService.UpdateAddressesByCustomerIdAsync(customerId, addresses);
+            var success = await _addressService.UpdateAddressesByCustomernameAsync(username, dto);
             if (success)
                 return Ok(new { message = "Addresses updated successfully" });
 
             return BadRequest(new { message = "Failed to update addresses" });
         }
 
-        // DELETE: api/address/customer/5
-        [HttpDelete("customer/{customerId}")]
-        public async Task<ActionResult> DeleteAddressesByCustomerId(int customerId)
+        [HttpDelete("customer/{username}")]
+        public async Task<ActionResult> DeleteAddressesByCustomer(string username)
         {
-            var success = await _addressService.DeleteAddressesByCustomerIdAsync(customerId);
+            var success = await _addressService.DeleteAddressesByCustomerAsync(username);
             if (success)
                 return Ok(new { message = "Addresses deleted successfully" });
 
-            return NotFound(new { message = $"No addresses found for customer ID {customerId}" });
+            return NotFound(new { message = $"No addresses found for customer ID {username}" });
         }
     }
 }

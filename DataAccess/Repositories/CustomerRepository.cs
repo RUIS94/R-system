@@ -105,12 +105,12 @@ namespace DataAccess.Repositories
             return true;
         }
 
-        public async Task<bool> UpdateNotesAsync(string username, string notes)
+        public async Task<bool> UpdateNotesAsync(Customer customer)
         {
             var parameters = new Dictionary<string, object?>
             {
-                { "username", username },
-                { "notes", notes }
+                { "username", customer.UserName },
+                { "notes", customer.Notes }
             };
 
             string query = "UPDATE customers SET notes = @notes WHERE username = @username";

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Model.DomainModels;
+using Model.DTO;
+using Service.Implementations;
 using Service.Interfaces;
 
 namespace API.Controllers
@@ -19,6 +21,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllAccountsAsync()
         {
             var accounts = await _accountService.GetAllAccountsAsync();
+
             return Ok(accounts);
         }
 
@@ -32,6 +35,20 @@ namespace API.Controllers
             return Ok(account);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateBalanceAsync([FromBody] UpdateBalanceDto dto)
+        {
+            var success = await _accountService.UpdateBalanceAsync(dto);
+            if (!success)
+                return BadRequest("Failed to update balance");
+
+            return Ok("Balance updated successfully");
+        }
+
+        #region
+        /// <summary>
+        /// These functionalities are currently disabled.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> AddAccountAsync([FromBody] Account account)
         {
@@ -43,31 +60,24 @@ namespace API.Controllers
             //return Ok("Account added successfully");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateBalanceAsync([FromBody] Account account)
-        {
-            var success = await _accountService.UpdateBalanceAsync(account);
-            if (!success)
-                return BadRequest("Failed to update balance");
-
-            return Ok("Balance updated successfully");
-        }
-
         [HttpDelete("{customerId}")]
         public async Task<IActionResult> DeleteAccountAsync(int customerId)
         {
-            var success = await _accountService.DeleteAccountAsync(customerId);
-            if (!success)
-                return BadRequest("Failed to delete account");
+            return Forbid("This functionality is currently disabled."); // if need this functionality, remove this line and uncomment the code below
+            //var success = await _accountService.DeleteAccountAsync(customerId);
+            //if (!success)
+            //    return BadRequest("Failed to delete account");
 
-            return Ok("Account deleted successfully");
+            //return Ok("Account deleted successfully");
         }
 
         [HttpGet("balance/{username}")]
         public async Task<IActionResult> GetBalanceByUsernameAsync(string username)
         {
-            var balance = await _accountService.GetBalanceByUsernameAsync(username);
-            return Ok(balance);
+            return Forbid("This functionality is currently disabled."); // if need this functionality, remove this line and uncomment the code below
+            //var balance = await _accountService.GetBalanceByUsernameAsync(username);
+            //return Ok(balance);
         }
+        #endregion
     }
 }

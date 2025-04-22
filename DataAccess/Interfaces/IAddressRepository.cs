@@ -12,7 +12,7 @@ namespace DataAccess.Interfaces
         Task<List<Address>> GetAllAddressesAsync();
         Task<List<Address>> GetAddressesByCustomerIdAsync(int customerId);
         Task<bool> AddAddressAsync(Address address);
-        Task<bool> UpdateAddressesByCustomerIdAsync(int customerId, List<Address> addresses);
+        Task<bool> UpdateAddressesByCustomerIdAsync(Address address);
         Task<bool> DeleteAddressesByCustomerIdAsync(int customerId);
     }
 }

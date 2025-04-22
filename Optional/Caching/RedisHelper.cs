@@ -11,7 +11,15 @@ namespace Infrastructure.Caching
 
         public RedisHelper(string configPath = "config/redis_config.json")
         {
-            var configFilePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, configPath);
+            //var configFilePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, configPath);
+
+            //_redisConfig = LoadRedisConfig(configFilePath);
+
+            var parentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.FullName;
+            if (parentDirectory == null)
+                throw new InvalidOperationException("Unable to determine the parent directory of the current working directory.");
+
+            var configFilePath = Path.Combine(parentDirectory, configPath);
 
             _redisConfig = LoadRedisConfig(configFilePath);
 
@@ -46,8 +54,8 @@ namespace Infrastructure.Caching
         public async Task<T?> GetAsync<T>(string key)
         {
             var value = await _db.StringGetAsync(key);
-            return !string.IsNullOrEmpty(value) ? JsonConvert.DeserializeObject<T>(value) : default;
-        }
+            return !string.IsNullOrEmpty(value) ? JsonConvert.DeserializeObject<T>(value!) : default;
+        }        
 
         public async Task RemoveAsync(string key)
         {

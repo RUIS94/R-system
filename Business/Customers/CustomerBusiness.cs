@@ -24,26 +24,34 @@ namespace Business.Customers
 
         public async Task<List<Customer>> SearchCustomersAsync(string term)
         {
-            //if (string.IsNullOrWhiteSpace(term))
-            //{
-            //    return await _customerRepository.GetAllCustomersAsync();
-            //}
             return await _customerRepository.GetCustomerByTermAsync(term);
         }
 
-        public async Task<bool> UpdateCustomerAsync(Customer customer)
+        public async Task<bool> UpdateCustomerAsync(UpdateCustomerDto dto)
         {
+            var customer = new Customer
+            {
+                UserName = dto.UserName,
+                Password = dto.Password,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                VIPlevel = dto.VIPLevel,
+                Notes = dto.Notes
+            };
             await ValidateUpdateCustomerAsync(_customerRepository, customer);
             return await _customerRepository.UpdateCustomerAsync(customer);
         }
 
-        public async Task<bool> UpdateNotesAsync(string username, string notes)
+        public async Task<bool> UpdateNotesAsync(UpdateCustomerNotesDto dto)
         {
-            CommonValidator.ValidateUserName(username);
-            return await _customerRepository.UpdateNotesAsync(username, notes);
+            var newnotes = new Customer
+            {
+                UserName = dto.UserName,
+                Notes = dto.Notes
+            };
+            CommonValidator.ValidateUserName(dto.UserName);
+            return await _customerRepository.UpdateNotesAsync(newnotes);
         }
-
-
 
         public async Task<bool> CreateCustomerWithAccountAsync(CreateCustomerDto dto)
         {
@@ -92,7 +100,7 @@ namespace Business.Customers
             return true;
         }
 
-
+        #region Validator need to access database
         private async Task EnsureUsernameNotExistsAsync(ICustomerRepository repo, string username)
         {
             CommonValidator.ValidateUserName(username);
@@ -126,5 +134,6 @@ namespace Business.Customers
             if (balance != 0)
                 throw new InvalidOperationException("Cannot delete user with non-zero balance.");
         }
+        #endregion
     }
 }

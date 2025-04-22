@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DataAccess.Interfaces;
 using Infrastructure.Caching;
 using Model.DomainModels;
+using Model.DTO;
 
 namespace DataAccess.Repositories
 {
@@ -97,41 +98,29 @@ namespace DataAccess.Repositories
             }
         }
 
-        public async Task<bool> UpdateAddressesByCustomerIdAsync(int customerId, List<Address> updatedAddresses)
+        public async Task<bool> UpdateAddressesByCustomerIdAsync(Address address)
         {
-            try
+            string query = @"
+                UPDATE addresses
+                SET address_type = @AddressType,            
+                street_address = @StreetAddress, 
+                city = @City, 
+                state = @State, 
+                country = @Country, 
+                zip_code = @ZipCode
+                WHERE customer_id = @CustomerID AND address_type = @AddressType";
+            var parameters = new Dictionary<string, object?>
             {
-                foreach (var address in updatedAddresses)
-                {
-                    string query = @"
-                        UPDATE addresses
-                        SET address_type = @AddressType, 
-                            street_address = @StreetAddress, 
-                            city = @City, 
-                            state = @State, 
-                            country = @Country, 
-                            zip_code = @ZipCode
-                        WHERE customer_id = @CustomerID AND address_type = @AddressType";
-
-                    var parameters = new Dictionary<string, object?>
-                    {
-                        { "CustomerID", customerId },
-                        { "AddressType", address.AddressType },
-                        { "StreetAddress", address.StreetAddress },
-                        { "City", address.City },
-                        { "State", address.State },
-                        { "Country", address.Country },
-                        { "ZipCode", address.ZipCode }
-                    };
-                    await ExecuteNonQueryAsync(query, parameters);
-                }
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+                { "CustomerID", address.CustomerID },
+                { "AddressType", address.AddressType },
+                { "StreetAddress", address.StreetAddress },
+                { "City", address.City },
+                { "State", address.State },
+                { "Country", address.Country },
+                { "ZipCode", address.ZipCode }
+            };
+            await ExecuteNonQueryAsync(query, parameters);
+            return true;
         }
         private Address MapToAddress(DataRow row)
         {

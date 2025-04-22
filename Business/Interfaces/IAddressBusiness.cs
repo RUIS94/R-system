@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model.DomainModels;
+using Model.DTO;
 
 namespace Business.Interfaces
 {
     public interface IAddressBusiness
     {
         Task<List<Address>> GetAllAddressesAsync();
-        Task<List<Address>> GetAddressesByCustomerIdAsync(int customerId);
-        Task<bool> AddAddressAsync(Address address);
-        Task<bool> UpdateAddressesByCustomerIdAsync(int customerId, List<Address> addresses);
-        Task<bool> DeleteAddressesByCustomerIdAsync(int customerId);
+        Task<List<Address>> GetAddressesByCustomerAsync(string username);
+        Task<bool> AddAddressAsync(string username, CreateAddressDto dto);
+        Task<bool> UpdateAddressesByCustomernameAsync(string name, UpdateAddressDto dto);
+        Task<bool> DeleteAddressesByCustomerAsync(string username);
     }
 }

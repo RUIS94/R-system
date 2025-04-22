@@ -20,8 +20,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-//Using api key
-//app.UseMiddleware<ApiKey>();//Delete it when debug
+//Using api key, uncomment when deploying to production
+//app.UseMiddleware<ApiKey>();
+
+//Using exception handling middleware
+app.UseMiddleware<API.Middlewares.ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

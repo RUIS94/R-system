@@ -1,5 +1,6 @@
 ﻿using Business.Interfaces;
 using Model.DomainModels;
+using Model.DTO;
 
 namespace Service.Interfaces
 {
@@ -10,7 +11,7 @@ namespace Service.Interfaces
         Task<Account> GetAccountByUsernameAsync(string username);
         Task<bool> AddAccountAsync(Account account);
 
-        Task<bool> UpdateBalanceAsync(Account account);
+        Task<bool> UpdateBalanceAsync(UpdateBalanceDto dto);
 
         Task<bool> DeleteAccountAsync(int customerId);
 

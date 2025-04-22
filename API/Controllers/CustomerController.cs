@@ -17,94 +17,52 @@ namespace API.Controllers
         [HttpGet("allcustomer")]
         public async Task<IActionResult> GetAllCustomers()
         {
-            try
-            {
-                var customers = await _customerService.GetAllCustomersAsync();
-                return Ok(new { data = customers });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = ex.Message });
-            }
+            var customers = await _customerService.GetAllCustomersAsync();
+            return Ok(new { data = customers });
         }
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchCustomers([FromQuery] string term)
         {
-            try
-            {
-                var result = await _customerService.SearchCustomersAsync(term);
-                return Ok(new { data = result });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            var result = await _customerService.SearchCustomersAsync(term);
+            return Ok(new { data = result });
         }
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateCustomerWithAccount([FromBody] CreateCustomerDto dto)
         {
-            try
-            {
-                await _customerService.CreateCustomerWithAccountAsync(dto);
-                return Ok(new { message = "The customer and account have been successfully created" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            await _customerService.CreateCustomerWithAccountAsync(dto);
+            return Ok(new { message = "The customer and account have been successfully created" });
         }
 
         [HttpPost("update")]
-        public async Task<IActionResult> UpdateCustomer([FromBody] Customer customer)
+        public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerDto dto)
         {
-            try
-            {
-                var success = await _customerService.UpdateCustomerAsync(customer);
-                if (!success)
-                    return NotFound(new { message = "Customer not found" });
+            var success = await _customerService.UpdateCustomerAsync(dto);
+            if (!success)
+                return NotFound(new { message = "Customer not found" });
 
-                return Ok(new { message = "Customer updated successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            return Ok(new { message = "Customer updated successfully" });
         }
 
         [HttpPost("update-notes")]
-        public async Task<IActionResult> UpdateNotes([FromQuery] string username, [FromBody] string notes)
+        public async Task<IActionResult> UpdateNotes([FromBody] UpdateCustomerNotesDto dto)
         {
-            try
-            {
-                var success = await _customerService.UpdateNotesAsync(username, notes);
-                if (!success)
-                    return NotFound(new { message = "Customer not found or update failed" });
+            var success = await _customerService.UpdateNotesAsync(dto);
+            if (!success)
+                return NotFound(new { message = "Customer not found or update failed" });
 
-                return Ok(new { message = "Notes updated successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            return Ok(new { message = "Notes updated successfully" });
         }
 
         [HttpDelete("delete/{username}")]
         public async Task<IActionResult> DeleteCustomerWithAccount(string username)
         {
-            try
-            {
-                var success = await _customerService.DeleteCustomerWithAccountAsync(username);
-                if (!success)
-                    return NotFound(new { message = "Customer not found or could not be deleted" });
+            var success = await _customerService.DeleteCustomerWithAccountAsync(username);
+            if (!success)
+                return NotFound(new { message = "Customer not found or could not be deleted" });
 
-                return Ok(new { message = "Customer and account deleted successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            return Ok(new { message = "Customer and account deleted successfully" });
         }
 
     }

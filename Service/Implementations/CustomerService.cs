@@ -30,16 +30,16 @@ namespace Service.Implementations
         {
             return await _customerBusiness.SearchCustomersAsync(term);
         }
-        public async Task<bool> UpdateCustomerAsync(Customer customer)
+        public async Task<bool> UpdateCustomerAsync(UpdateCustomerDto dto)
         {
             return await _transactionExecutor.ExecuteAsync(() =>
-                _customerBusiness.UpdateCustomerAsync(customer));
+                _customerBusiness.UpdateCustomerAsync(dto));
         }
 
-        public async Task<bool> UpdateNotesAsync(string username, string notes)
+        public async Task<bool> UpdateNotesAsync(UpdateCustomerNotesDto dto)
         {
             return await _transactionExecutor.ExecuteAsync(() =>
-                _customerBusiness.UpdateNotesAsync(username, notes));
+                _customerBusiness.UpdateNotesAsync(dto));
         }
 
         public async Task<bool> CreateCustomerWithAccountAsync(CreateCustomerDto dto)

@@ -14,7 +14,7 @@ namespace DataAccess.Interfaces
         Task<bool> AddCustomerAsync(Customer customer);
         Task<bool> UpdateCustomerAsync(Customer customer);
         Task<bool> DeleteCustomerAsync(string username);
-        Task<bool> UpdateNotesAsync(string username, string notes);
+        Task<bool> UpdateNotesAsync(Customer customer);
         Task<int> GetIDBynameAsync(string username);
     }
 }
